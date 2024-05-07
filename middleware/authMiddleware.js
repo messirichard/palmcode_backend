@@ -8,9 +8,8 @@ const jwt = require("jsonwebtoken")
  * @param {e.NextFunction} next
  */
 exports.jwtUserMiddleware = async (req, res, next) => {
-    const {
-        token
-    } = req.headers
+    let token = req.headers['x-access-token'] || req.headers['authorization'];
+    token = token?.replace(/^Bearer\s+/, "");
 
     jwt.verify(token, process.env.JWTUSERSECRETTOKEN, async (err, jwtData) => {
         if (err) {
@@ -20,7 +19,7 @@ exports.jwtUserMiddleware = async (req, res, next) => {
             })
         }
 
-        if (process.env.JWTUSERSECRETTOKEN !== jwtData.role) {
+        if (process.env.JWTUSERROLE !== jwtData.role) {
             return res.status(403).json({
                 message: "role unverified"
             })
