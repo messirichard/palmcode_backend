@@ -1,5 +1,5 @@
 const models = require("../models");
-
+const bcrypt = require("bcryptjs");
 /**
  * Check if data exists
  * @param data
@@ -17,3 +17,7 @@ exports.validateEmail = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 };
+
+exports.comparePassword = async (password, hash) => {
+    return await bcrypt.compare(password, hash);
+}

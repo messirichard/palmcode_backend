@@ -39,9 +39,8 @@ exports.jwtUserMiddleware = async (req, res, next) => {
  * @param {e.NextFunction} next
  */
 exports.jwtAdminMiddleware = (req, res, next) => {
-    const {
-        token
-    } = req.headers
+    let token = req.headers['x-access-token'] || req.headers['authorization'];
+    token = token?.replace(/^Bearer\s+/, "");
 
     if (!token) {
         return res.status(400).json({
@@ -57,7 +56,7 @@ exports.jwtAdminMiddleware = (req, res, next) => {
             })
         }
 
-        if (process.env.JWTADMINIDENTIFIER !== jwtData.role) {
+        if (process.env.JWTADMINROLE !== jwtData.role) {
             return res.status(403).json({
                 message: "role unverified"
             })

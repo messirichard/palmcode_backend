@@ -1,10 +1,9 @@
 const express = require('express');
+const {loginAdmin} = require("../controller/admin/auth");
 const router = express.Router();
 
 /* GET Admin listing. */
-// router.post('/submission-step-1', jwtUserMiddleware, submissionStep1);
-// router.patch('/submission-step-2', jwtUserMiddleware, submissionStep2);
-// router.patch('/submission-step-3', jwtUserMiddleware, submissionStep3);
+router.post('/login', loginAdmin);
 //
 // //CRUD Country
 // router.get('/country', jwtAdminMiddleware, getCountry);

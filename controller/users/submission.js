@@ -114,6 +114,7 @@ exports.submissionStep3 = async (req, res) => {
             message: 'Success create submission step 3',
             fileUploaded: !!req.file
         });
+
     } catch (error) {
         return  res.status(404).json({ message: error.message });
     }
