@@ -138,8 +138,7 @@ exports.getSubmissionById = async (req, res) => {
             return res.status(404).json({ message: "Submission Data Not Found" });
         }
 
-        //submission.identity change the value
-        submission.identity = "uploads/"+submission.identity;
+        submission.identity = submission.identity.replace(/\\/g, "/");
 
         return res.status(200).json({message: "Submission Data", submission});
 
