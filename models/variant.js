@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // define association to submission
+        Variant.hasMany(models.Submission, {
+            foreignKey: 'id_variant'
+        });
     }
   }
   Variant.init({
@@ -20,5 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Variant',
   });
+
   return Variant;
 };

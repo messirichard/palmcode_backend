@@ -22,7 +22,7 @@ exports.getCountry = async (req, res) => {
             return res.status(404).json({ message: "Country Data Not Found" });
         }
 
-        return res.status(200).json({message: "Country Data", count, data, country});
+        return res.status(200).json({message: "Country Data", count, data});
 
     } catch (error) {
         return res.status(404).json({ message: error.message });

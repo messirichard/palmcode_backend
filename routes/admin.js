@@ -9,6 +9,7 @@ const {getVariant, getVariantById} = require("../controller/admin/variant/getVar
 const {createVariant} = require("../controller/admin/variant/createVariant");
 const {updateVariant} = require("../controller/admin/variant/updateVariant");
 const {deleteVariant} = require("../controller/admin/variant/deleteVariant");
+const {getSubmission, getSubmissionById} = require("../controller/admin/submission/submission");
 const router = express.Router();
 
 /* GET Admin listing. */
@@ -29,7 +30,8 @@ router.patch('/update-variant/:id', jwtAdminMiddleware,updateVariant);
 router.delete('/delete-variant/:id', jwtAdminMiddleware, deleteVariant);
 //
 // //Get Submission
-// router.get('/submission', jwtAdminMiddleware, getSubmission);
-// router.get('/submission/:id', jwtAdminMiddleware, getSubmissionById);
+router.get('/get-submission', jwtAdminMiddleware, getSubmission);
+router.get('/get-submission/:id', jwtAdminMiddleware, getSubmissionById);
+// router.delete('/submission/:id', jwtAdminMiddleware, deleteSubmission);
 
 module.exports = router;
