@@ -8,7 +8,10 @@ exports.getCountry = async (req, res) => {
     try {
         const {count, rows, country} = await models.Country.findAndCountAll(paginate(
             {
-                where: {status: true}, // conditions
+                 // conditions
+                order: [
+                    ['id', 'ASC']
+                ]
             },
             { page, pageSize },
         ));

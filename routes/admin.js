@@ -5,6 +5,10 @@ const {getCountry, getCountryById} = require("../controller/admin/country/getCou
 const {updateCountry} = require("../controller/admin/country/updateCountry");
 const {createCountry} = require("../controller/admin/country/createCountry");
 const {deleteCountry} = require("../controller/admin/country/deleteCountry");
+const {getVariant, getVariantById} = require("../controller/admin/variant/getVariant");
+const {createVariant} = require("../controller/admin/variant/createVariant");
+const {updateVariant} = require("../controller/admin/variant/updateVariant");
+const {deleteVariant} = require("../controller/admin/variant/deleteVariant");
 const router = express.Router();
 
 /* GET Admin listing. */
@@ -18,10 +22,11 @@ router.patch('/update-country/:id', jwtAdminMiddleware, updateCountry);
 router.delete('/delete-country/:id', jwtAdminMiddleware, deleteCountry);
 //
 // //CRUD Variant
-// router.get('/variant', jwtAdminMiddleware, getVariant);
-// router.post('/variant', jwtAdminMiddleware, createVariant);
-// router.patch('/variant', jwtAdminMiddleware,updateVariant);
-// router.delete('/variant', jwtAdminMiddleware, deleteVariant);
+router.get('/get-variant', jwtAdminMiddleware, getVariant);
+router.get('/get-variant/:id', jwtAdminMiddleware, getVariantById);
+router.post('/create-variant', jwtAdminMiddleware, createVariant);
+router.patch('/update-variant/:id', jwtAdminMiddleware,updateVariant);
+router.delete('/delete-variant/:id', jwtAdminMiddleware, deleteVariant);
 //
 // //Get Submission
 // router.get('/submission', jwtAdminMiddleware, getSubmission);
