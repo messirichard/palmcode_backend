@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 // router.get('/country', getCountry);
 // router.get('/variant', getVariant);
 
-router.get('/country', getCountry);
-router.get('/variant', getVariant);
+router.get('/get-country', getCountry);
+router.get('/get-variant', getVariant);
 
 module.exports = router;
