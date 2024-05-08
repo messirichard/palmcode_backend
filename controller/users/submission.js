@@ -16,7 +16,7 @@ exports.submissionStep1 = async (req, res) => {
         // const emailValid = await validateEmail(email);
 
         if (emailExists || whatsappExists) {
-            return res.status(404).json({ message: 'User Already Exists' });
+            return res.status(400).json({ message: 'User Already Exists' });
         }
 
         // if (!emailValid) {

@@ -42,12 +42,6 @@ exports.jwtAdminMiddleware = (req, res, next) => {
     let token = req.headers['x-access-token'] || req.headers['authorization'];
     token = token?.replace(/^Bearer\s+/, "");
 
-    if (!token) {
-        return res.status(400).json({
-            message: "Token in headers is required"
-        })
-    }
-
     jwt.verify(token, process.env.JWTADMINSECRETTOKEN, (err, jwtData) => {
         if (err) {
             return res.status(401).json({

@@ -1,14 +1,47 @@
 const models = require( '../../../models/index');
+const {paginate} = require("../../../util/util");
+
 exports.getCountry = async (req, res) => {
-    const limit = req.query.limit || 10;
-    const offset = req.query.offset || 0;
+    const pageSize = req.body.page || 10;
+    const page = req.body.offset || 0;
+
     try {
-        const country = await models.Country.findAll({
-            limit,
-            offset,
-        });
-        res.status(200).json(country);
+        const {count, rows, country} = await models.Country.findAndCountAll(paginate(
+            {
+                where: {status: true}, // conditions
+            },
+            { page, pageSize },
+        ));
+
+        let data = rows
+
+        if (data.length === 0) {
+            return res.status(404).json({ message: "Country Data Not Found" });
+        }
+
+        return res.status(200).json({message: "Country Data", count, data, country});
+
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        return res.status(404).json({ message: error.message });
+    }
+}
+
+exports.getCountryById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const country = await models.Country.findOne({
+            where: {
+                id
+            }
+        });
+
+        if (!country) {
+            return res.status(404).json({ message: "Country Data Not Found" });
+        }
+
+        return res.status(200).json({message: "Country Data", country});
+
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
     }
 }

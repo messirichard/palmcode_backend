@@ -21,3 +21,14 @@ exports.validateEmail = (email) => {
 exports.comparePassword = async (password, hash) => {
     return await bcrypt.compare(password, hash);
 }
+
+exports.paginate = (query, { page, pageSize }) => {
+    const offset = page * pageSize;
+    const limit = pageSize;
+
+    return {
+        ...query,
+        offset,
+        limit,
+    };
+};

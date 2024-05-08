@@ -30,15 +30,14 @@ exports.loginAdmin = async (req, res) => {
             })
         }
 
-        const token = sign({
-            id: admin.id,
-            role: process.env.JWTADMINROLE
-        }, process.env.JWTADMINSECRETTOKEN, {
-            expiresIn: "1d"
-        })
+        const token = sign({ id: admin.id, role: process.env.JWTADMINROLE }, process.env.JWTADMINSECRETTOKEN, {
+            expiresIn: 86400, // 24 hours
+        });
+
+        console.log(token)
 
         return res.json({
-            message: "login success",
+            message: "Login Success",
             token
         })
     }
