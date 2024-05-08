@@ -1,7 +1,6 @@
-const {sign} = require("jsonwebtoken");
 const models = require("../../models/index");
-const upload = require('../../middleware/fileMiddleware');
-const {generateToken} = require("../../util/util");
+const {generateToken, validateEmail} = require("../../util/util");
+const {Op} = require("sequelize");
 
 /**
  * Create new submission step 1
@@ -14,17 +13,23 @@ exports.submissionStep1 = async (req, res) => {
     try {
         const emailExists = await models.Submission.findOne({ where: { email: email }});
         const whatsappExists = await models.Submission.findOne({ where: { whatsapp_number: whatsapp_number }});
-        // const emailValid = await validateEmail(email);
+        const emailValid = await validateEmail(email);
 
-        if (emailExists || whatsappExists) {
-            const submission = await models.Submission.findOne({ where: { email: email, $or: {whatsapp_number: whatsapp_number}}});
-
-            return res.status(400).json({ message: 'User Already Exists' });
+        if (!emailValid) {
+            return res.status(400).json({ message: 'Invalid Email' });
         }
 
-        // if (!emailValid) {
-        //     return res.status(400).json({ message: 'Invalid Email' });
-        // }
+        if (emailExists || whatsappExists) {
+            const submission = await models.Submission.findOne({ where: {
+                    [Op.or]: [
+                        { email },
+                        { whatsapp_number }
+                    ]
+                }
+            });
+            const token = await generateToken(submission.id, process.env.JWTUSERROLE, process.env.JWTUSERSECRETTOKEN);
+            return res.status(400).json({ message: 'User Already Exists', token });
+        }
 
         const submission = await models.Submission.create({
             name,
@@ -118,5 +123,25 @@ exports.submissionStep3 = async (req, res) => {
 
     } catch (error) {
         return  res.status(404).json({ message: error.message });
+    }
+}
+
+exports.getSubmissionById = async (req, res) => {
+    const { id } = res.locals.jwtData;
+    try {
+        const submission = await models.Submission.findOne({
+            where: {
+                id
+            }
+        });
+
+        if (!submission) {
+            return res.status(404).json({ message: "Submission Data Not Found" });
+        }
+
+        return res.status(200).json({message: "Submission Data", submission});
+
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
     }
 }
