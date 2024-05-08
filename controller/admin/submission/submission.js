@@ -72,14 +72,18 @@ exports.getSubmissionById = async (req, res) => {
 
 exports.deleteSubmission = async (req, res) => {
     const { id } = req.params;
-    const { status } = req.body;
+    const {status} = req.body;
     try {
-        const submission = await Submission.update({
-            status,
-            where: {
-                id
+        await models.Submission.update(
+            {
+                status
+            },
+            {
+                where: {
+                    id
+                }
             }
-        });
+        );
         return res.status(200).json({ message: "Submission Deleted" });
     }
     catch (error) {
