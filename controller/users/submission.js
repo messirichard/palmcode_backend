@@ -110,7 +110,7 @@ exports.submissionStep3 = async (req, res) => {
         if (req.file) {
             console.log('Uploaded File:', req.file);
             await models.Submission.update({
-                identity: req.file.path
+                identity: req.file
             }, {
                 where: { id }
             });
@@ -138,6 +138,9 @@ exports.getSubmissionById = async (req, res) => {
         if (!submission) {
             return res.status(404).json({ message: "Submission Data Not Found" });
         }
+
+        //submission.identity change the value
+        submission.identity = "uploads/"+submission.identity;
 
         return res.status(200).json({message: "Submission Data", submission});
 
