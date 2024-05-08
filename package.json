@@ -24,6 +24,7 @@
     "pg-hstore": "^2.3.4",
     "pug": "2.0.0-beta11",
     "sequelize": "^6.37.3",
+    "uuid": "^9.0.1",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
