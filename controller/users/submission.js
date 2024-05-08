@@ -108,9 +108,8 @@ exports.submissionStep3 = async (req, res) => {
         }
 
         if (req.file) {
-            console.log('Uploaded File:', req.file);
             await models.Submission.update({
-                identity: req.file
+                identity: req.file.path
             }, {
                 where: { id }
             });
