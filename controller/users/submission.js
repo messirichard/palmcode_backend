@@ -1,6 +1,7 @@
 const {sign} = require("jsonwebtoken");
 const models = require("../../models/index");
 const upload = require('../../middleware/fileMiddleware');
+const {generateToken} = require("../../util/util");
 
 /**
  * Create new submission step 1
@@ -16,6 +17,8 @@ exports.submissionStep1 = async (req, res) => {
         // const emailValid = await validateEmail(email);
 
         if (emailExists || whatsappExists) {
+            const submission = await models.Submission.findOne({ where: { email: email, $or: {whatsapp_number: whatsapp_number}}});
+
             return res.status(400).json({ message: 'User Already Exists' });
         }
 
@@ -30,9 +33,7 @@ exports.submissionStep1 = async (req, res) => {
             id_country,
         });
 
-        const token = sign({ id: submission.id, whatsapp_number, role: process.env.JWTUSERROLE }, process.env.JWTUSERSECRETTOKEN, {
-            expiresIn: 86400, // 24 hours
-        });
+        const token = await generateToken(submission.id, process.env.JWTUSERROLE, process.env.JWTUSERSECRETTOKEN);
 
         return res.status(200).json({ message: 'Success create submission step 1', token});
     } catch (error) {

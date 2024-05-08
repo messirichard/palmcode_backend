@@ -1,5 +1,5 @@
 const {sign} = require("jsonwebtoken");
-const {comparePassword} = require("../../util/util");
+const {comparePassword, generateToken} = require("../../util/util");
 const models = require("../../models");
 exports.loginAdmin = async (req, res) => {
     try {
@@ -30,11 +30,7 @@ exports.loginAdmin = async (req, res) => {
             })
         }
 
-        const token = sign({ id: admin.id, role: process.env.JWTADMINROLE }, process.env.JWTADMINSECRETTOKEN, {
-            expiresIn: 86400, // 24 hours
-        });
-
-        console.log(token)
+        const token = await generateToken(admin.id, process.env.JWTADMINROLE, process.env.JWTADMINSECRETTOKEN);
 
         return res.json({
             message: "Login Success",

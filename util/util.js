@@ -1,5 +1,6 @@
 const models = require("../models");
 const bcrypt = require("bcryptjs");
+const {sign} = require("jsonwebtoken");
 /**
  * Check if data exists
  * @param data
@@ -32,3 +33,9 @@ exports.paginate = (query, { page, pageSize }) => {
         limit,
     };
 };
+
+exports.generateToken = async (id, role, secret) => {
+    return sign({ id, role}, secret, {
+        expiresIn: 86400, // 24 hours
+    });
+}
