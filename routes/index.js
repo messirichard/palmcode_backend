@@ -1,6 +1,6 @@
 const express = require('express');
-const {getCountry} = require("../controller/admin/country/getCountry");
-const {getVariant} = require("../controller/admin/variant/getVariant");
+const {getCountry} = require("../controller/users/getCountry");
+const {getVariant} = require("../controller/users/getVariant");
 const router = express.Router();
 
 /* GET home page. */
