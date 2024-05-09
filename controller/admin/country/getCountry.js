@@ -2,8 +2,8 @@ const models = require( '../../../models/index');
 const {paginate} = require("../../../util/util");
 
 exports.getCountry = async (req, res) => {
-    const pageSize = req.body.page || 10;
-    const page = req.body.offset || 0;
+    const pageSize = req.body.page || null;
+    const page = req.body.offset || null;
 
     try {
         const {count, rows, country} = await models.Country.findAndCountAll(paginate(
