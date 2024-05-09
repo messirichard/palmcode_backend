@@ -1,5 +1,5 @@
 const models = require("../../models/index");
-const {generateToken, validateEmail} = require("../../util/util");
+const {generateToken, validateEmail, validateWA} = require("../../util/util");
 const {Op} = require("sequelize");
 
 /**
@@ -14,9 +14,14 @@ exports.submissionStep1 = async (req, res) => {
         const emailExists = await models.Submission.findOne({ where: { email: email }});
         const whatsappExists = await models.Submission.findOne({ where: { whatsapp_number: whatsapp_number }});
         const emailValid = await validateEmail(email);
+        const whatsappValid = await validateWA(whatsapp_number)
 
         if (!emailValid) {
             return res.status(400).json({ message: 'Invalid Email' });
+        }
+
+        if(!whatsappValid) {
+            return res.status(400).json({ message: 'Invalid Whatsapp Number' });
         }
 
         if (emailExists || whatsappExists) {

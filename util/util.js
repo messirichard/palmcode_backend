@@ -19,6 +19,13 @@ exports.validateEmail = (email) => {
         );
 };
 
+exports.validateWA = (wa) => {
+    return String(wa)
+        .match(
+            /^[0-9]+$/
+        );
+};
+
 exports.comparePassword = async (password, hash) => {
     return await bcrypt.compare(password, hash);
 }
