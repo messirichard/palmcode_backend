@@ -33,7 +33,7 @@ exports.submissionStep1 = async (req, res) => {
                 }
             });
             const token = await generateToken(submission.id, process.env.JWTUSERROLE, process.env.JWTUSERSECRETTOKEN);
-            return res.status(400).json({ message: 'User Already Exists', token });
+            return res.status(200).json({ message: 'User Already Exists', token });
         }
 
         const submission = await models.Submission.create({
@@ -142,8 +142,6 @@ exports.getSubmissionById = async (req, res) => {
         if (!submission) {
             return res.status(404).json({ message: "Submission Data Not Found" });
         }
-
-        submission.identity = submission.identity.replace(/\\/g, "/");
 
         return res.status(200).json({message: "Submission Data", submission});
 
