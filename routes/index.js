@@ -7,8 +7,6 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-// router.get('/country', getCountry);
-// router.get('/variant', getVariant);
 
 router.get('/get-country', getCountry);
 router.get('/get-variant', getVariant);
