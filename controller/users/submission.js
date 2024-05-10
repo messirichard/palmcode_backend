@@ -142,7 +142,7 @@ exports.getSubmissionById = async (req, res) => {
                 include: [
                     {
                         model: models.Country,
-                        attributes: ['name']
+                        attributes: ['name', 'code']
                     }
                 ],
             },
