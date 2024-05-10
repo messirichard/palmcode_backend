@@ -133,11 +133,20 @@ exports.submissionStep3 = async (req, res) => {
 exports.getSubmissionById = async (req, res) => {
     const { id } = res.locals.jwtData;
     try {
-        const submission = await models.Submission.findOne({
-            where: {
-                id
-            }
-        });
+        const submission = await models.Submission.findOne(
+            {
+                where: {
+                    id
+                },
+                attributes: ['name', 'email', 'date'],
+                include: [
+                    {
+                        model: models.Country,
+                        attributes: ['name']
+                    }
+                ],
+            },
+        );
 
         if (!submission) {
             return res.status(404).json({ message: "Submission Data Not Found" });
