@@ -1,17 +1,21 @@
-const models = require( '../../../models/index');
-const {paginate} = require("../../../util/util");
+const models = require( '../../models/index');
+const {paginate} = require("../../util/util");
 
 exports.getVariant = async (req, res) => {
     const pageSize = req.body.page || 10;
     const page = req.body.offset || 0;
 
     try {
-        const {count, rows, variant} = await models.Variant.findAndCountAll(paginate(
+        const {count, rows, variant} = await models.Variant.findAndCountAll(
             {
-                 // conditions
-            },
-            { page, pageSize },
-        ));
+                where: {
+                    status: true
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
+            }
+        );
 
         let data = rows
 

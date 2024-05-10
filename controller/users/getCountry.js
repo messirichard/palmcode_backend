@@ -1,20 +1,21 @@
-const models = require( '../../../models/index');
-const {paginate} = require("../../../util/util");
+const models = require( '../../models/index');
+const {paginate} = require("../../util/util");
 
 exports.getCountry = async (req, res) => {
     const pageSize = req.body.page || null;
     const page = req.body.offset || null;
 
     try {
-        const {count, rows, country} = await models.Country.findAndCountAll(paginate(
+        const {count, rows, country} = await models.Country.findAndCountAll(
             {
-                 // conditions
+                where: {
+                    status: true
+                },
                 order: [
                     ['id', 'ASC']
                 ]
-            },
-            { page, pageSize },
-        ));
+            }
+        )
 
         let data = rows
 
