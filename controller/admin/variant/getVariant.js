@@ -4,11 +4,15 @@ const {paginate} = require("../../../util/util");
 exports.getVariant = async (req, res) => {
     const pageSize = req.body.page || 10;
     const page = req.body.offset || 0;
+    const sort = req.body.sort || 'ASC';
 
     try {
         const {count, rows, variant} = await models.Variant.findAndCountAll(paginate(
             {
                  // conditions
+                order: [
+                    ['id', sort]
+                ]
             },
             { page, pageSize },
         ));

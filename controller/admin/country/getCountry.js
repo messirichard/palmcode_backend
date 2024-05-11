@@ -4,13 +4,14 @@ const {paginate} = require("../../../util/util");
 exports.getCountry = async (req, res) => {
     const pageSize = req.body.page || null;
     const page = req.body.offset || null;
+    const sort = req.body.sort || 'ASC';
 
     try {
         const {count, rows, country} = await models.Country.findAndCountAll(paginate(
             {
                  // conditions
                 order: [
-                    ['id', 'ASC']
+                    ['id', sort]
                 ]
             },
             { page, pageSize },
