@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Submission.belongsTo(models.Country, {
+        foreignKey: 'id_country'
+      });
+      Submission.belongsTo(models.Variant, {
+          foreignKey: 'id_variant'
+      });
     }
   }
   Submission.init({
