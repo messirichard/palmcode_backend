@@ -19,26 +19,28 @@ JWTADMINROLE=ADMIN
 JWTADMINSECRETTOKEN=palmcodeadmin
 ```
 
-Third Run migration:
+Third Your Database Configuration in /config/config.json file:
+
+Fourth Run migration:
 ```bash
 npx sequelize-cli db:migrate
 #or
 sequelize db:migrate
 ```
 
-Fourth, run the seed:
+Fifth, run the seed:
 ```bash
 npx sequelize-cli db:seed:all
 #or
 sequelize db:seed:all
 ```
 
-Fifth, create the folder /uploads:
+Sixth, create the folder /uploads:
 ```bash
 mkdir uploads
 ```
 
-Sixth, run the development server:
+Seven, run the development server:
 ```bash
 npm run dev
 # or
